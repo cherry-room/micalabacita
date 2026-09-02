@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Calabacita ‹3</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="sentado.png" type="image/png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Sacramento&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pudding-yellow: #F5DEB3;
+      --pudding-brown: #C4A35A;
+      --pudding-dark: #8B6914;
+      --pudding-cream: #FFF8DC;
+      --pudding-white: #FFFEF7;
+      --pudding-pink: #FADADD;
+      --pudding-blue: #B5D8EB;
+      --pudding-green: #C1E1C1;
+      --pudding-orange: #FFD89E;
+      --shadow: rgba(196, 163, 90, 0.2);
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--pudding-white);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 20% 20%, var(--pudding-cream) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, var(--pudding-pink) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--pudding-cream), var(--pudding-yellow));
+      border-radius: 30px;
+      border: 3px dashed var(--pudding-brown);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '☆ ☆ ☆';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: var(--pudding-brown);
+      letter-spacing: 10px;
+    }
+
+    .intro-gif {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid var(--pudding-brown);
+      margin: 0 auto 20px;
+      display: block;
+      object-fit: cover;
+      background-color: var(--pudding-cream);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .welcome-text {
+      font-family: 'Sacramento', cursive;
+      font-size: 3rem;
+      color: var(--pudding-dark);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--pudding-dark);
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    /* Main Content Layout */
+    .main-content {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    /* Left Side - Folders */
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Folders Container */
+    .folders-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Folder Style */
+    .folder {
+      background: linear-gradient(180deg, var(--pudding-cream) 0%, #FFF 100%);
+      border: 2px solid var(--pudding-brown);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .folder:hover {
+      box-shadow: 0 10px 30px rgba(196, 163, 90, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .folder-tab {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--pudding-yellow) 0%, var(--pudding-cream) 100%);
+      border-bottom: 2px dashed var(--pudding-brown);
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .folder-tab:hover {
+      background: linear-gradient(135deg, var(--pudding-orange) 0%, var(--pudding-yellow) 100%);
+    }
+
+    .folder-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 2px solid var(--pudding-brown);
+      margin-right: 12px;
+      object-fit: cover;
+      background-color: var(--pudding-white);
+    }
+
+    .folder-title {
+      flex: 1;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--pudding-dark);
+    }
+
+    .folder-toggle {
+      font-size: 1.3rem;
+      transition: transform 0.3s ease;
+      color: var(--pudding-dark);
+    }
+
+    .folder.active .folder-toggle {
+      transform: rotate(180deg);
+    }
+
+    .folder-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+      background: white;
+    }
+
+    .folder.active .folder-content {
+      max-height: 1000px;
+      padding: 20px;
+    }
+
+    /* Notes in Folder */
+    .notes-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .note {
+      background: linear-gradient(135deg, #FFFEF7, var(--pudding-cream));
+      border: 2px solid var(--pudding-yellow);
+      border-radius: 12px;
+      padding: 15px;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .note:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px var(--shadow);
+    }
+
+    .note::before {
+      content: '📌';
+      position: absolute;
+      top: -8px;
+      left: 12px;
+      font-size: 1rem;
+    }
+
+    .note:nth-child(1) { background: linear-gradient(135deg, #FFFEF7, #FFFACD); }
+    .note:nth-child(2) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-pink)); }
+    .note:nth-child(3) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-blue)); }
+    .note:nth-child(4) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-green)); }
+    .note:nth-child(5) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-orange)); }
+    .note:nth-child(6) { background: linear-gradient(135deg, #FFFEF7, #E6E6FA); }
+
+    .note-text {
+      font-size: 0.85rem;
+      color: var(--pudding-dark);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    /* Songs in Folder */
+    .songs-container {
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .songs-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .songs-container::-webkit-scrollbar-track {
+      background: var(--pudding-cream);
+      border-radius: 10px;
+    }
+
+    .songs-container::-webkit-scrollbar-thumb {
+      background: var(--pudding-brown);
+      border-radius: 10px;
+    }
+
+    .songs-container::-webkit-scrollbar-thumb:hover {
+      background: var(--pudding-dark);
+    }
+
+    .song-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--pudding-cream), var(--pudding-white));
+      border: 2px solid var(--pudding-yellow);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .song-item:hover {
+      background: linear-gradient(135deg, var(--pudding-yellow), var(--pudding-cream));
+      transform: translateX(5px);
+      box-shadow: 0 4px 15px var(--shadow);
+    }
+
+    .song-number {
+      width: 30px;
+      height: 30px;
+      background: var(--pudding-brown);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .song-info {
+      flex: 1;
+    }
+
+    .song-title {
+      font-weight: 700;
+      color: var(--pudding-dark);
+      margin-bottom: 2px;
+      font-size: 0.9rem;
+    }
+
+    .song-artist {
+      color: var(--pudding-brown);
+      font-size: 0.8rem;
+    }
+
+    .song-icon {
+      font-size: 1.3rem;
+      margin-left: 8px;
+    }
+
+    .song-embed {
+      display: block;
+      border: none;
+      border-radius: 0;
+    }
+
+    /* Right Side - Dedication */
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dedication-box {
+      background: linear-gradient(135deg, var(--pudding-cream), white);
+      border: 3px solid var(--pudding-brown);
+      border-radius: 25px;
+      padding: 40px 35px;
+      text-align: center;
+      box-shadow: 0 10px 40px var(--shadow);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .dedication-box::before {
+      content: '✿';
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-size: 1.5rem;
+      color: var(--pudding-brown);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .dedication-box::after {
+      content: '✿';
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: var(--pudding-brown);
+      animation: pulse 2s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .dedication-title {
+      font-family: 'Sacramento', cursive;
+      font-size: 2.5rem;
+      color: var(--pudding-dark);
+      margin-bottom: 20px;
+    }
+
+    .dedication-text {
+      font-size: 1.1rem;
+      color: var(--pudding-dark);
+      line-height: 1.8;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .dedication-signature {
+      font-family: 'Sacramento', cursive;
+      font-size: 1.8rem;
+      color: var(--pudding-brown);
+      margin-top: 20px;
+    }
+
+    .dedication-decoration {
+      font-size: 2rem;
+      margin-top: 15px;
+      letter-spacing: 10px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 30px;
+      margin-top: 20px;
+    }
+
+    .footer-text {
+      font-family: 'Sacramento', cursive;
+      font-size: 1.8rem;
+      color: var(--pudding-dark);
+    }
+
+    .footer-hearts {
+      margin-top: 10px;
+      font-size: 1.5rem;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Floating decorations */
+    .floating-purin {
+      position: fixed;
+      font-size: 2rem;
+      opacity: 0.3;
+      animation: floatAround 20s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes floatAround {
+      0% { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-100vh) rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .right-panel {
+        order: -1;
+      }
+
+      .dedication-box {
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .welcome-text {
+        font-size: 2.2rem;
+      }
+
+      .intro-gif {
+        width: 140px;
+        height: 140px;
+      }
+
+      .folder-tab {
+        padding: 12px 15px;
+      }
+
+      .folder-icon {
+        width: 35px;
+        height: 35px;
+      }
+
+      .folder-title {
+        font-size: 0.95rem;
+      }
+
+      .dedication-box {
+        padding: 30px 25px;
+      }
+
+      .dedication-title {
+        font-size: 2rem;
+      }
+
+      .dedication-text {
+        font-size: 1rem;
+      }
+    }
+
+    /* Working section */
+    .working-section {
+      background: linear-gradient(135deg, var(--pudding-cream), white);
+      border: 3px solid var(--pudding-brown);
+      border-radius: 25px;
+      padding: 25px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 8px 30px var(--shadow);
+    }
+
+    .working-title {
+      font-family: 'Sacramento', cursive;
+      font-size: 2rem;
+      color: var(--pudding-dark);
+      margin-bottom: 15px;
+    }
+
+    .working-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .working-gif {
+      width: 250px;
+      max-width: 100%;
+      border-radius: 15px;
+      border: 3px solid var(--pudding-yellow);
+      box-shadow: 0 5px 20px var(--shadow);
+    }
+
+    .working-caption {
+      font-size: 1rem;
+      color: var(--pudding-dark);
+      font-weight: 600;
+    }
+
+    /* Flower float */
+    .flower-float {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      width: 130px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .flower-float:hover {
+      transform: scale(1.15) rotate(10deg);
+    }
+
+    .flower-float:active {
+      transform: scale(0.95);
+    }
+
+    /* Petal messages */
+    .petal-message {
+      position: fixed;
+      font-family: 'Sacramento', cursive;
+      font-size: 1.8rem;
+      color: var(--pudding-dark);
+      background: linear-gradient(135deg, var(--pudding-cream), var(--pudding-pink));
+      border: 2px solid var(--pudding-brown);
+      border-radius: 20px;
+      padding: 10px 20px;
+      z-index: 2000;
+      pointer-events: none;
+      box-shadow: 0 5px 20px var(--shadow);
+      animation: rise 2.5s ease-out forwards;
+      transform: translateX(-50%);
+    }
+
+    @keyframes rise {
+      0% {
+        top: 100vh;
+        opacity: 0;
+        transform: translate(-50%, 0) rotate(-5deg) scale(0.8);
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        top: 10vh;
+        opacity: 0;
+        transform: translate(-50%, -100px) rotate(5deg) scale(1.1);
+      }
+    }
+
+    /* Maximized folder */
+    .folder.maximized {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90vw, 800px);
+      z-index: 1500;
+      box-shadow: 0 20px 60px rgba(196, 163, 90, 0.5);
+    }
+
+    .folder.maximized:hover {
+      transform: translate(-50%, -50%);
+    }
+
+    .folder.maximized .folder-content {
+      max-height: 70vh;
+      padding: 25px;
+      overflow-y: auto;
+    }
+
+    .folder.maximized .folder-tab {
+      font-size: 1.5rem;
+    }
+
+    .folder.maximized .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .folder.maximized .note-text {
+      font-size: 0.95rem;
+    }
+
+    .folder.maximized .songs-container {
+      max-height: 55vh;
+    }
+
+    .folder.maximized .song-item {
+      padding: 15px;
+    }
+
+    body:has(.folder.maximized)::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(139, 105, 20, 0.3);
+      backdrop-filter: blur(2px);
+      z-index: 1400;
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating decorations -->
+  <div class="floating-purin" style="left: 5%;">🍮</div>
+  <div class="floating-purin" style="left: 25%; animation-delay: 5s;">⭐</div>
+  <div class="floating-purin" style="left: 50%; animation-delay: 10s;">🍮</div>
+  <div class="floating-purin" style="left: 75%; animation-delay: 15s;">⭐</div>
+  <div class="floating-purin" style="left: 90%; animation-delay: 3s;">🍮</div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <img src="intro.gif" alt="Welcome" class="intro-gif">
+      <h1 class="welcome-text">Te Amo Calabacita</h1>
+      <p class="subtitle">A LITTLE PAGE FOR THE ONE I LOVE ‹3</p>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Left Panel - Folders -->
+      <div class="left-panel">
+        <div class="folders-container">
+          <!-- Folder 1: Things I love about you -->
+          <div class="folder" id="folder1">
+            <div class="folder-tab" onclick="toggleFolder('folder1')">
+              <img src="sentado.png" alt="Icon" class="folder-icon">
+              <span class="folder-title">Things I Love About You</span>
+              <span class="folder-toggle">▼</span>
+            </div>
+            <div class="folder-content">
+              <div class="notes-grid">
+                <div class="note">
+                  <p class="note-text">Your smile lights up my entire world.</p>
+                </div>
+                <div class="note">
+                  <p class="note-text">The way you laugh makes me the happiest person alive.</p>
+                </div>
+                <div class="note">
+                  <p class="note-text">How you always know how to make me feel better.</p>
+                </div>
+                <div class="note">
+                  <p class="note-text">Your kindness and beautiful heart.</p>
+                </div>
+                <div class="note">
+                  <p class="note-text">Every moment with you feels like a dream.</p>
+                </div>
+                <div class="note">
+                  <p class="note-text">The way you care about the little things.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Folder 2: Songs that remind me of you -->
+          <div class="folder" id="folder2">
+            <div class="folder-tab" onclick="toggleFolder('folder2')">
+              <img src="musica.png" alt="Icon" class="folder-icon">
+              <span class="folder-title">Songs That Remind Me of You</span>
+              <span class="folder-toggle">▼</span>
+            </div>
+            <div class="folder-content">
+              <div class="songs-container">
+                <iframe src="https://open.spotify.com/embed/track/1EryAkZ0VHstC6haIxVBiE?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/089jl361OtZ6VpYvhgPiTS?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/5UWwZ5lm5PKu6eKsHAGxOk?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/38tfi9dtBQQ5Wyt7EL0G3z?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/2VtXANhW6YpAzsMDQCFkAv?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/1ucnuV88gFTfR3BalmznDk?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/6q4zA7hWKFF6wsJ64DWdwU?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/4CYeId6mLAasOb6o0NCz4Y?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/5Ohxk2dO5COHF1krpoPigN?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/0axbGyJYPGhzVaxzm6cHcq?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/1G9wM0DIuyxn0m0QeENIkl?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/2VhJ4nrPorAbySEgO4V0BS?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/6PGoSes0D9eUDeeAafB2As?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/3k3NWokhRRkEPhCzPmV8TW?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/35LdDKNMwvKftENaj1WIwF?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/1OubIZ0ARYCUq5kceYUQiO?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/0SRddBTphQwQcfqw4Br1uX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/0yc6Gst2xkRu0eMLeRMGCX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/5XeFesFbtLpXzIVDNQP22n?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/7akmeqrBymPrakykkXJEQR?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/36WG7HuTxJ02Mi2PVFnKCG?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/6jhI39SKNxCTwBEmJ6mhqj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/4k3xDpAdBuM17mNNHhOZkK?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/7mTOeGfsxp8WXvVLL2B76c?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/6te48Fmf7E7DaBltRKRPE4?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/5YLRLec3uDTQyNTACKLM0m?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/09DFJg2KCnbBXkYItMubU5?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/5ePUUBW4kMKWoP3RItbiQB?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/00WLowvlN5cjkYpQV6pjo4?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/4vgU9MGJwhgBEtlO8mMN49?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+                <iframe src="https://open.spotify.com/embed/track/4lriIG2vNqwDWzOj2I9rtj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel - Dedication -->
+      <div class="right-panel">
+        <div class="dedication-box">
+          <h2 class="dedication-title">For You, My Love</h2>
+          <p class="dedication-text">
+            Every day with you is a gift I never knew I needed. 
+            You make my heart smile in ways I never thought possible. 
+            Thank you for being the most amazing person in my life. 
+            I love you more than words could ever express.
+          </p>
+          <div class="dedication-signature">Forever Yours</div>
+          <div class="dedication-decoration">✿ uwu ✿</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Working on this page -->
+    <div class="working-section">
+      <h2 class="working-title">Me Haciendo Esta Página ‹3</h2>
+      <div class="working-box">
+        <img src="trabajando.gif" alt="Working" class="working-gif">
+        <p class="working-caption">Full focus, full cariño, solo para ti uwu</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer-text">Forever & Always Yours</p>
+      <div class="footer-hearts">✿ uwu ✿</div>
+    </footer>
+  </div>
+
+  <!-- Flower (fixed bottom-right) -->
+  <img src="flor.png" alt="flower" class="flower-float" onclick="throwPetals()">
+
+  <script>
+    function toggleFolder(folderId) {
+      const folder = document.getElementById(folderId);
+      const wasActive = folder.classList.contains('active');
+
+      document.querySelectorAll('.folder').forEach(f => f.classList.remove('active', 'maximized'));
+
+      if (!wasActive) {
+        folder.classList.add('active', 'maximized');
+      }
+    }
+
+    function throwPetals() {
+      const messages = ['te amo', 'te quiero mucho', 'amorteamo', 'uwu', 'mi calabacita', 'eres mi todo', 'tequieromucho'];
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      const span = document.createElement('span');
+      span.className = 'petal-message';
+      span.textContent = msg;
+      span.style.left = (Math.random() * 60 + 20) + '%';
+      document.body.appendChild(span);
+      setTimeout(() => span.remove(), 2500);
+    }
+  </script>
+</body>
+</html>

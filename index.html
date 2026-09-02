@@ -20,8 +20,9 @@
       --pudding-brown: #C4A35A;
       --pudding-dark: #8B6914;
       --pudding-cream: #FFF8DC;
-      --pudding-white: #FFFEF7;
-      --pudding-pink: #FADADD;
+      --pudding-white: #FFF5F3;
+      --pudding-pink: #FFE0E6;
+      --pudding-rosa: #F8C8D4;
       --pudding-blue: #B5D8EB;
       --pudding-green: #C1E1C1;
       --pudding-orange: #FFD89E;
@@ -30,11 +31,12 @@
 
     body {
       font-family: 'Quicksand', sans-serif;
-      background-color: var(--pudding-white);
+      background-color: #FFFFFF;
       min-height: 100vh;
       background-image:
-        radial-gradient(circle at 20% 20%, var(--pudding-cream) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, var(--pudding-pink) 0%, transparent 50%);
+        radial-gradient(circle at 12% 12%, rgba(248, 200, 212, 0.25) 0%, transparent 30%),
+        radial-gradient(circle at 88% 15%, rgba(245, 222, 179, 0.30) 0%, transparent 30%),
+        radial-gradient(circle at 75% 88%, rgba(255, 224, 230, 0.25) 0%, transparent 35%);
     }
 
     .container {
@@ -43,19 +45,320 @@
       padding: 20px;
     }
 
-    /* Header */
-    .header {
-      text-align: center;
-      padding: 40px 20px;
+    /* Floating decorations */
+    .floating-purin {
+      position: fixed;
+      font-size: 2rem;
+      opacity: 0.3;
+      animation: floatAround 20s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-pochaco {
+      position: fixed;
+      width: 90px;
+      height: auto;
+      opacity: 0.35;
+      object-fit: contain;
+      animation: floatAround 26s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes floatAround {
+      0% { transform: translateY(105vh) rotate(0deg); }
+
+      100% { transform: translateY(-110vh) rotate(360deg); }
+    }
+
+    /* Stickers on section corners */
+    .sticker {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 6;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.18));
+    }
+
+    .sticker-tr { top: -34px; right: -26px; transform: rotate(10deg); }
+    .sticker-tl { top: -34px; left: -26px; transform: rotate(-10deg); }
+    .sticker-br { bottom: -34px; right: -26px; transform: rotate(-10deg); }
+    .sticker-bl { bottom: -34px; left: -26px; transform: rotate(10deg); }
+
+    /* A/B Grid layout */
+    .grid-ab {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "welcome welcome"
+        "songs   notes"
+        "dedi    notes";
+      gap: 24px;
       margin-bottom: 30px;
-      background: linear-gradient(135deg, var(--pudding-cream), var(--pudding-yellow));
-      border-radius: 30px;
-      border: 3px dashed var(--pudding-brown);
+    }
+
+    .welcome { grid-area: welcome; }
+    .window.songs-cell { grid-area: songs; margin: 0; }
+    .notes-area { grid-area: notes; }
+    .dedication-cell { grid-area: dedi; margin: 0; }
+
+    .col-a { grid-column: 1; }
+    .col-b { grid-column: 2; }
+
+    .grid-c {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 30px;
+      align-items: stretch;
+    }
+
+    .deco-cell .deco-strip {
+      height: 100%;
+      margin-bottom: 0;
+    }
+
+    /* B2/B3 - Notes area (fills right column next to songs & dedication) */
+    .notes-area {
       position: relative;
+      background: linear-gradient(160deg, #FFFFFF, var(--pudding-cream));
+      border: 3px dashed var(--pudding-brown);
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 25px 25px 30px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 30px var(--shadow);
+    }
+
+    .notes-area-header {
+      font-family: 'Sacramento', cursive;
+      font-size: 2rem;
+      color: var(--pudding-dark);
+      text-align: center;
+    }
+
+    .notes-area-hint {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--pudding-dark);
+      opacity: 0.8;
+      margin: 4px 0 10px;
+    }
+
+    .notes-bouncer {
+      flex: 1;
+      position: relative;
+      min-height: 360px;
+    }
+
+    .bouncer {
+      position: absolute;
+      width: 130px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: transform 0.2s ease, opacity 0.5s ease;
+    }
+
+    .bouncer:hover { animation-play-state: paused; transform: scale(1.15); }
+
+    .bouncer.gone {
+      opacity: 0;
+      transform: scale(0.3) !important;
+      pointer-events: none;
+      animation: none !important;
+    }
+
+    .afk-1 { animation: afk1 6s ease-in-out infinite; }
+    .afk-2 { animation: afk2 7s ease-in-out infinite; }
+    .afk-3 { animation: afk3 6.5s ease-in-out infinite; }
+    .afk-4 { animation: afk4 7.5s ease-in-out infinite; }
+    .afk-5 { animation: afk5 6s ease-in-out infinite; }
+    .afk-6 { animation: afk2 8s ease-in-out infinite; }
+    .afk-7 { animation: afk1 7s ease-in-out infinite; }
+    .afk-8 { animation: afk4 6.5s ease-in-out infinite; }
+    .afk-9 { animation: afk3 8s ease-in-out infinite; }
+    .afk-10 { animation: afk5 7s ease-in-out infinite; }
+
+    @keyframes afk1 {
+      0%, 100% { transform: translate(0, 0) rotate(-4deg); }
+      25%      { transform: translate(14px, -20px) rotate(3deg); }
+      50%      { transform: translate(-8px, -34px) rotate(-2deg); }
+      75%      { transform: translate(-16px, -12px) rotate(4deg); }
+    }
+
+    @keyframes afk2 {
+      0%, 100% { transform: translate(0, 0) rotate(3deg); }
+      25%      { transform: translate(-16px, -16px) rotate(-3deg); }
+      50%      { transform: translate(12px, -30px) rotate(4deg); }
+      75%      { transform: translate(18px, -10px) rotate(-2deg); }
+    }
+
+    @keyframes afk3 {
+      0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+      25%      { transform: translate(10px, -26px) rotate(5deg); }
+      50%      { transform: translate(-14px, -18px) rotate(-4deg); }
+      75%      { transform: translate(6px, -6px) rotate(2deg); }
+    }
+
+    @keyframes afk4 {
+      0%, 100% { transform: translate(0, 0) rotate(4deg); }
+      25%      { transform: translate(-12px, -22px) rotate(-4deg); }
+      50%      { transform: translate(16px, -26px) rotate(3deg); }
+      75%      { transform: translate(-6px, -8px) rotate(-3deg); }
+    }
+
+    @keyframes afk5 {
+      0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+      20%      { transform: translate(8px, -14px) rotate(2deg); }
+      45%      { transform: translate(-18px, -32px) rotate(-5deg); }
+      70%      { transform: translate(12px, -20px) rotate(4deg); }
+    }
+
+    .bouncer-img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+
+    .bouncer-label {
+      display: block;
+      margin-top: 4px;
+      font-family: 'Sacramento', cursive;
+      font-size: 1.15rem;
+      color: var(--pudding-dark);
+      opacity: 0.85;
+    }
+
+    /* Mini window (note reveal) */
+    .notes-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .notes-overlay.show { display: flex; }
+
+    .note-pop {
+      background: linear-gradient(160deg, #FFFFFF, var(--pudding-pink));
+      border: 3px solid var(--pudding-brown);
+      border-radius: 22px;
+      padding: 30px 34px;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+      animation: popIn 0.3s ease;
+    }
+
+    .note-pop-title {
+      font-family: 'Sacramento', cursive;
+      font-size: 1.8rem;
+      color: var(--pudding-dark);
+      margin-bottom: 12px;
+    }
+
+    .note-pop-text {
+      font-size: 1rem;
+      color: var(--pudding-dark);
+      line-height: 1.7;
+    }
+
+    .note-pop-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--pudding-dark);
+      cursor: pointer;
+    }
+
+    .note-pop-translate {
+      position: absolute;
+      top: 12px;
+      right: 52px;
+      background: linear-gradient(135deg, var(--pudding-rosa), var(--pudding-pink));
+      border: 2px solid var(--pudding-brown);
+      border-radius: 14px;
+      padding: 4px 12px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--pudding-dark);
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .note-pop-translate:hover {
+      transform: scale(1.08);
+      background: linear-gradient(135deg, var(--pudding-pink), var(--pudding-rosa));
+      box-shadow: 0 5px 14px rgba(0,0,0,0.22);
+    }
+
+    .note-pop-translate:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .window {
+      background: linear-gradient(135deg, var(--pudding-cream), white);
+      border-radius: 20px;
+      border: 2px solid var(--pudding-brown);
+      box-shadow: 0 8px 30px var(--shadow);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: visible;
+      margin-top: 0;
+    }
+
+    .window-title {
+      font-family: 'Sacramento', cursive;
+      font-size: 1.9rem;
+      color: var(--pudding-dark);
+      text-align: center;
+      padding: 15px 20px 5px;
+      letter-spacing: 1px;
+    }
+
+    .window-body {
+      padding: 20px;
+      flex: 1;
       overflow: hidden;
     }
 
-    .header::before {
+    /* A1/B1 - Welcome header */
+    .welcome {
+      text-align: center;
+      padding: 40px 25px;
+      background: linear-gradient(135deg, #FFFFFF, var(--pudding-cream));
+      border-radius: 20px;
+      border: 3px dashed var(--pudding-brown);
+      position: relative;
+      overflow: visible;
+      grid-column: 1 / -1;
+    }
+
+    .welcome::before {
       content: '☆ ☆ ☆';
       position: absolute;
       top: 10px;
@@ -67,11 +370,11 @@
     }
 
     .intro-gif {
-      width: 180px;
-      height: 180px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       border: 4px solid var(--pudding-brown);
-      margin: 0 auto 20px;
+      margin: 0 auto 15px;
       display: block;
       object-fit: cover;
       background-color: var(--pudding-cream);
@@ -85,110 +388,50 @@
 
     .welcome-text {
       font-family: 'Sacramento', cursive;
-      font-size: 3rem;
+      font-size: 2.8rem;
       color: var(--pudding-dark);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .subtitle {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--pudding-dark);
       font-weight: 600;
       letter-spacing: 2px;
     }
 
-    /* Main Content Layout */
-    .main-content {
-      display: grid;
-      grid-template-columns: 350px 1fr;
-      gap: 30px;
-      margin-bottom: 30px;
+    /* A2 - Songs window */
+    .songs-container {
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 6px;
     }
 
-    /* Left Side - Folders */
-    .left-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    .songs-container::-webkit-scrollbar {
+      width: 6px;
     }
 
-    /* Folders Container */
-    .folders-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    /* Folder Style */
-    .folder {
-      background: linear-gradient(180deg, var(--pudding-cream) 0%, #FFF 100%);
-      border: 2px solid var(--pudding-brown);
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 6px 20px var(--shadow);
-      transition: all 0.3s ease;
-    }
-
-    .folder:hover {
-      box-shadow: 0 10px 30px rgba(196, 163, 90, 0.3);
-      transform: translateY(-3px);
-    }
-
-    .folder-tab {
-      display: flex;
-      align-items: center;
-      padding: 15px 20px;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--pudding-yellow) 0%, var(--pudding-cream) 100%);
-      border-bottom: 2px dashed var(--pudding-brown);
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-
-    .folder-tab:hover {
-      background: linear-gradient(135deg, var(--pudding-orange) 0%, var(--pudding-yellow) 100%);
-    }
-
-    .folder-icon {
-      width: 40px;
-      height: 40px;
+    .songs-container::-webkit-scrollbar-track {
+      background: var(--pudding-cream);
       border-radius: 10px;
-      border: 2px solid var(--pudding-brown);
-      margin-right: 12px;
-      object-fit: cover;
-      background-color: var(--pudding-white);
     }
 
-    .folder-title {
-      flex: 1;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--pudding-dark);
+    .songs-container::-webkit-scrollbar-thumb {
+      background: var(--pudding-brown);
+      border-radius: 10px;
     }
 
-    .folder-toggle {
-      font-size: 1.3rem;
-      transition: transform 0.3s ease;
-      color: var(--pudding-dark);
+    .songs-container::-webkit-scrollbar-thumb:hover {
+      background: var(--pudding-dark);
     }
 
-    .folder.active .folder-toggle {
-      transform: rotate(180deg);
+    .song-embed {
+      display: block;
+      border: none;
+      border-radius: 0;
     }
 
-    .folder-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease, padding 0.3s ease;
-      background: white;
-    }
-
-    .folder.active .folder-content {
-      max-height: 1000px;
-      padding: 20px;
-    }
-
-    /* Notes in Folder */
+    /* B2 - Notes window */
     .notes-grid {
       display: flex;
       flex-direction: column;
@@ -217,193 +460,140 @@
       font-size: 1rem;
     }
 
-    .note:nth-child(1) { background: linear-gradient(135deg, #FFFEF7, #FFFACD); }
-    .note:nth-child(2) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-pink)); }
-    .note:nth-child(3) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-blue)); }
-    .note:nth-child(4) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-green)); }
-    .note:nth-child(5) { background: linear-gradient(135deg, #FFFEF7, var(--pudding-orange)); }
-    .note:nth-child(6) { background: linear-gradient(135deg, #FFFEF7, #E6E6FA); }
-
     .note-text {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--pudding-dark);
       line-height: 1.5;
       font-weight: 500;
     }
 
-    /* Songs in Folder */
-    .songs-container {
-      max-height: 300px;
-      overflow-y: auto;
-      padding-right: 8px;
-    }
-
-    .songs-container::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .songs-container::-webkit-scrollbar-track {
-      background: var(--pudding-cream);
-      border-radius: 10px;
-    }
-
-    .songs-container::-webkit-scrollbar-thumb {
-      background: var(--pudding-brown);
-      border-radius: 10px;
-    }
-
-    .songs-container::-webkit-scrollbar-thumb:hover {
-      background: var(--pudding-dark);
-    }
-
-    .song-item {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, var(--pudding-cream), var(--pudding-white));
-      border: 2px solid var(--pudding-yellow);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .song-item:hover {
-      background: linear-gradient(135deg, var(--pudding-yellow), var(--pudding-cream));
-      transform: translateX(5px);
-      box-shadow: 0 4px 15px var(--shadow);
-    }
-
-    .song-number {
-      width: 30px;
-      height: 30px;
-      background: var(--pudding-brown);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.8rem;
-      margin-right: 12px;
-      flex-shrink: 0;
-    }
-
-    .song-info {
-      flex: 1;
-    }
-
-    .song-title {
-      font-weight: 700;
-      color: var(--pudding-dark);
-      margin-bottom: 2px;
-      font-size: 0.9rem;
-    }
-
-    .song-artist {
-      color: var(--pudding-brown);
-      font-size: 0.8rem;
-    }
-
-    .song-icon {
-      font-size: 1.3rem;
-      margin-left: 8px;
-    }
-
-    .song-embed {
-      display: block;
-      border: none;
-      border-radius: 0;
-    }
-
-    /* Right Side - Dedication */
-    .right-panel {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
+    /* A3 - Dedication */
     .dedication-box {
       background: linear-gradient(135deg, var(--pudding-cream), white);
       border: 3px solid var(--pudding-brown);
-      border-radius: 25px;
-      padding: 40px 35px;
+      border-radius: 20px;
+      padding: 30px 28px;
       text-align: center;
-      box-shadow: 0 10px 40px var(--shadow);
+      box-shadow: 0 8px 30px var(--shadow);
       position: relative;
-      overflow: hidden;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    .dedication-box::before {
-      content: '✿';
-      position: absolute;
-      top: 15px;
-      left: 20px;
-      font-size: 1.5rem;
-      color: var(--pudding-brown);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    .dedication-box::after {
-      content: '✿';
-      position: absolute;
-      bottom: 15px;
-      right: 20px;
-      font-size: 1.5rem;
-      color: var(--pudding-brown);
-      animation: pulse 2s ease-in-out infinite 0.5s;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.2); opacity: 1; }
+      overflow: visible;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .dedication-title {
       font-family: 'Sacramento', cursive;
-      font-size: 2.5rem;
+      font-size: 2.3rem;
       color: var(--pudding-dark);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .dedication-text {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--pudding-dark);
       line-height: 1.8;
       font-weight: 500;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .dedication-post {
       font-family: 'Quicksand', sans-serif;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--pudding-dark);
-      line-height: 1.8;
+      line-height: 1.7;
       font-weight: 700;
-      margin-top: 10px;
+      margin-top: 5px;
       opacity: 0.85;
     }
 
-    .dedication-signature {
-      font-family: 'Sacramento', cursive;
-      font-size: 1.8rem;
-      color: var(--pudding-brown);
-      margin-top: 20px;
+    /* B3 - Working */
+    .working-box {
+      background: linear-gradient(135deg, var(--pudding-cream), white);
+      border: 3px solid var(--pudding-brown);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 8px 30px var(--shadow);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: visible;
     }
 
-    .dedication-decoration {
-      font-size: 2rem;
-      margin-top: 15px;
-      letter-spacing: 10px;
+    .working-title {
+      font-family: 'Sacramento', cursive;
+      font-size: 2.3rem;
+      color: var(--pudding-dark);
+    }
+
+    .working-gif {
+      width: 200px;
+      max-width: 100%;
+      border-radius: 15px;
+      border: 3px solid var(--pudding-yellow);
+    }
+
+    .working-small {
+      width: 180px;
+    }
+
+    .working-caption {
+      font-size: 1.15rem;
+      color: var(--pudding-dark);
+      font-weight: 600;
+    }
+
+    /* C4 - Decorations strip */
+    .deco-strip {
+      background: linear-gradient(135deg, #FFFFFF, var(--pudding-cream));
+      border: 3px solid var(--pudding-brown);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      box-shadow: 0 8px 30px var(--shadow);
+    }
+
+    .deco-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex: 1 1 220px;
+      max-width: 280px;
+      text-align: center;
+    }
+
+    .deco-img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 3px solid var(--pudding-brown);
+      background: white;
+    }
+
+    .deco-text {
+      font-family: 'Sacramento', cursive;
+      font-size: 1.4rem;
+      color: var(--pudding-dark);
+      line-height: 1.4;
     }
 
     /* Footer */
     .footer {
       text-align: center;
-      padding: 30px;
-      margin-top: 20px;
+      padding: 20px;
     }
 
     .footer-text {
@@ -413,119 +603,14 @@
     }
 
     .footer-hearts {
-      margin-top: 10px;
-      font-size: 1.5rem;
+      margin-top: 8px;
+      font-size: 1.3rem;
       animation: heartbeat 1.5s ease-in-out infinite;
     }
 
     @keyframes heartbeat {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.1); }
-    }
-
-    /* Floating decorations */
-    .floating-purin {
-      position: fixed;
-      font-size: 2rem;
-      opacity: 0.3;
-      animation: floatAround 20s linear infinite;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    @keyframes floatAround {
-      0% { transform: translateY(100vh) rotate(0deg); }
-      100% { transform: translateY(-100vh) rotate(360deg); }
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .main-content {
-        grid-template-columns: 1fr;
-      }
-
-      .right-panel {
-        order: -1;
-      }
-
-      .dedication-box {
-        margin-bottom: 30px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .welcome-text {
-        font-size: 2.2rem;
-      }
-
-      .intro-gif {
-        width: 140px;
-        height: 140px;
-      }
-
-      .folder-tab {
-        padding: 12px 15px;
-      }
-
-      .folder-icon {
-        width: 35px;
-        height: 35px;
-      }
-
-      .folder-title {
-        font-size: 0.95rem;
-      }
-
-      .dedication-box {
-        padding: 30px 25px;
-      }
-
-      .dedication-title {
-        font-size: 2rem;
-      }
-
-      .dedication-text {
-        font-size: 1rem;
-      }
-    }
-
-    /* Working section */
-    .working-section {
-      background: linear-gradient(135deg, var(--pudding-cream), white);
-      border: 3px solid var(--pudding-brown);
-      border-radius: 25px;
-      padding: 25px;
-      margin-bottom: 30px;
-      text-align: center;
-      box-shadow: 0 8px 30px var(--shadow);
-    }
-
-    .working-title {
-      font-family: 'Sacramento', cursive;
-      font-size: 2rem;
-      color: var(--pudding-dark);
-      margin-bottom: 15px;
-    }
-
-    .working-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .working-gif {
-      width: 250px;
-      max-width: 100%;
-      border-radius: 15px;
-      border: 3px solid var(--pudding-yellow);
-      box-shadow: 0 5px 20px var(--shadow);
-    }
-
-    .working-caption {
-      font-size: 1rem;
-      color: var(--pudding-dark);
-      font-weight: 600;
     }
 
     /* Flower float */
@@ -541,7 +626,7 @@
     }
 
     .flower-float:hover {
-      transform: scale(1.15) rotate(10deg);
+      transform: scale(1.1) rotate(8deg);
     }
 
     .flower-float:active {
@@ -581,56 +666,24 @@
       }
     }
 
-    /* Maximized folder */
-    .folder.maximized {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(90vw, 800px);
-      z-index: 1500;
-      box-shadow: 0 20px 60px rgba(196, 163, 90, 0.5);
-    }
+    /* Responsive */
+    @media (max-width: 800px) {
+      .grid-ab {
+        grid-template-columns: 1fr;
+      }
 
-    .folder.maximized:hover {
-      transform: translate(-50%, -50%);
-    }
+      .grid-c {
+        grid-template-columns: 1fr;
+      }
 
-    .folder.maximized .folder-content {
-      max-height: 70vh;
-      padding: 25px;
-      overflow-y: auto;
-    }
+      .col-a, .col-b {
+        grid-column: 1;
+        grid-row: auto;
+      }
 
-    .folder.maximized .folder-tab {
-      font-size: 1.5rem;
-    }
-
-    .folder.maximized .notes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 15px;
-    }
-
-    .folder.maximized .note-text {
-      font-size: 0.95rem;
-    }
-
-    .folder.maximized .songs-container {
-      max-height: 55vh;
-    }
-
-    .folder.maximized .song-item {
-      padding: 15px;
-    }
-
-    body:has(.folder.maximized)::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: rgba(139, 105, 20, 0.3);
-      backdrop-filter: blur(2px);
-      z-index: 1400;
+      .welcome {
+        grid-column: 1;
+      }
     }
   </style>
 </head>
@@ -641,112 +694,115 @@
   <div class="floating-purin" style="left: 50%; animation-delay: 10s;">🍮</div>
   <div class="floating-purin" style="left: 75%; animation-delay: 15s;">⭐</div>
   <div class="floating-purin" style="left: 90%; animation-delay: 3s;">🍮</div>
+  <img src="pochaco cayendo.png" alt="" class="floating-pochaco" style="left: 10%; animation-delay: 2s;">
+  <img src="pochaco cayendo.png" alt="" class="floating-pochaco" style="left: 35%; animation-delay: 9s;">
+  <img src="pochaco cayendo.png" alt="" class="floating-pochaco" style="left: 60%; animation-delay: 16s;">
+  <img src="pochaco cayendo.png" alt="" class="floating-pochaco" style="left: 82%; animation-delay: 6s;">
 
   <div class="container">
-    <!-- Header -->
-    <header class="header">
+    <!-- A1/B1 - Welcome -->
+    <header class="welcome">
+      <img src="pochaco con gorrito.png" alt="" class="sticker sticker-br">
       <img src="intro.gif" alt="Welcome" class="intro-gif">
       <h1 class="welcome-text">Te Amo Calabacita</h1>
       <p class="subtitle">A LITTLE PAGE FOR THE ONE I LOVE ‹3</p>
     </header>
 
-    <!-- Main Content -->
-    <div class="main-content">
-      <!-- Left Panel - Folders -->
-      <div class="left-panel">
-        <div class="folders-container">
-          <!-- Folder 1: Things I love about you -->
-          <div class="folder" id="folder1">
-            <div class="folder-tab" onclick="toggleFolder('folder1')">
-              <img src="sentado.png" alt="Icon" class="folder-icon">
-              <span class="folder-title">Things I Love About You</span>
-              <span class="folder-toggle">▼</span>
-            </div>
-            <div class="folder-content">
-              <div class="notes-grid">
-                <div class="note">
-                  <p class="note-text">I love your taste, how nerdy you can be just to get every single one of my references.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">How sweet and kind you are with the way you treat me.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">The beautiful things you always say to me.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">Your love for Genshin, anime, music, movies and food.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">The way you think and how you see things.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">I love the way you take things as a joke, always laughing it off.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">I love how you talk about the things you're into.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">The way you farm your aura, and how you're a pro at MM2.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">That I can be completely myself when I'm with you.</p>
-                </div>
-                <div class="note">
-                  <p class="note-text">The way we celebrate things, even the little ones.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Folder 2: Songs that remind me of you -->
-          <div class="folder" id="folder2">
-            <div class="folder-tab" onclick="toggleFolder('folder2')">
-              <img src="musica.png" alt="Icon" class="folder-icon">
-              <span class="folder-title">Songs That Remind Me of You</span>
-              <span class="folder-toggle">▼</span>
-            </div>
-            <div class="folder-content">
-              <div class="songs-container">
-                <iframe src="https://open.spotify.com/embed/track/1EryAkZ0VHstC6haIxVBiE?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/089jl361OtZ6VpYvhgPiTS?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/5UWwZ5lm5PKu6eKsHAGxOk?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/38tfi9dtBQQ5Wyt7EL0G3z?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/2VtXANhW6YpAzsMDQCFkAv?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/1ucnuV88gFTfR3BalmznDk?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/6q4zA7hWKFF6wsJ64DWdwU?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/4CYeId6mLAasOb6o0NCz4Y?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/5Ohxk2dO5COHF1krpoPigN?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/0axbGyJYPGhzVaxzm6cHcq?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/1G9wM0DIuyxn0m0QeENIkl?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/2VhJ4nrPorAbySEgO4V0BS?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/6PGoSes0D9eUDeeAafB2As?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/3k3NWokhRRkEPhCzPmV8TW?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/35LdDKNMwvKftENaj1WIwF?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/1OubIZ0ARYCUq5kceYUQiO?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/0SRddBTphQwQcfqw4Br1uX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/0yc6Gst2xkRu0eMLeRMGCX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/5XeFesFbtLpXzIVDNQP22n?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/7akmeqrBymPrakykkXJEQR?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/36WG7HuTxJ02Mi2PVFnKCG?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/6jhI39SKNxCTwBEmJ6mhqj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/4k3xDpAdBuM17mNNHhOZkK?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/7mTOeGfsxp8WXvVLL2B76c?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/6te48Fmf7E7DaBltRKRPE4?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/5YLRLec3uDTQyNTACKLM0m?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/09DFJg2KCnbBXkYItMubU5?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/5ePUUBW4kMKWoP3RItbiQB?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/00WLowvlN5cjkYpQV6pjo4?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/4vgU9MGJwhgBEtlO8mMN49?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-                <iframe src="https://open.spotify.com/embed/track/4lriIG2vNqwDWzOj2I9rtj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
-              </div>
-            </div>
+    <!-- A/B Grid -->
+    <div class="grid-ab">
+      <!-- A2 - Songs -->
+      <div class="window col-a songs-cell">
+        <img src="pochaco musica.png" alt="" class="sticker sticker-tr">
+        <h2 class="window-title">Songs That Remind Me of You</h2>
+        <div class="window-body">
+          <div class="songs-container">
+            <iframe src="https://open.spotify.com/embed/track/1EryAkZ0VHstC6haIxVBiE?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/089jl361OtZ6VpYvhgPiTS?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/5UWwZ5lm5PKu6eKsHAGxOk?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/38tfi9dtBQQ5Wyt7EL0G3z?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/2VtXANhW6YpAzsMDQCFkAv?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/1ucnuV88gFTfR3BalmznDk?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/6q4zA7hWKFF6wsJ64DWdwU?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/4CYeId6mLAasOb6o0NCz4Y?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/5Ohxk2dO5COHF1krpoPigN?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/0axbGyJYPGhzVaxzm6cHcq?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/1G9wM0DIuyxn0m0QeENIkl?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/2VhJ4nrPorAbySEgO4V0BS?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/6PGoSes0D9eUDeeAafB2As?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/3k3NWokhRRkEPhCzPmV8TW?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/35LdDKNMwvKftENaj1WIwF?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/1OubIZ0ARYCUq5kceYUQiO?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/0SRddBTphQwQcfqw4Br1uX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/0yc6Gst2xkRu0eMLeRMGCX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/5XeFesFbtLpXzIVDNQP22n?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/7akmeqrBymPrakykkXJEQR?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/36WG7HuTxJ02Mi2PVFnKCG?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/6jhI39SKNxCTwBEmJ6mhqj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/4k3xDpAdBuM17mNNHhOZkK?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/7mTOeGfsxp8WXvVLL2B76c?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/6te48Fmf7E7DaBltRKRPE4?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/5YLRLec3uDTQyNTACKLM0m?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/09DFJg2KCnbBXkYItMubU5?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/5ePUUBW4kMKWoP3RItbiQB?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/00WLowvlN5cjkYpQV6pjo4?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/4vgU9MGJwhgBEtlO8mMN49?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
+            <iframe src="https://open.spotify.com/embed/track/4lriIG2vNqwDWzOj2I9rtj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="song-embed"></iframe>
           </div>
         </div>
       </div>
 
-      <!-- Right Panel - Dedication -->
-      <div class="right-panel">
+      <!-- B2/B3 - Notes (interactive) -->
+      <div class="notes-area">
+        <div class="notes-area-header">Cosas que amo de ti ‹3</div>
+        <p class="notes-area-hint">¡Toca cada Pochaco para revelar una nota!</p>
+        <div class="notes-bouncer">
+          <div class="bouncer afk-1" data-note="0" style="top: 2%; left: 4%;">
+            <img src="pochaco con abejita.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-2" data-note="1" style="top: 3%; left: 55%;">
+            <img src="pochaco cayendo.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-3" data-note="2" style="top: 16%; left: 30%;">
+            <img src="sentado.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-4" data-note="3" style="top: 35%; left: 5%;">
+            <img src="pochaco hada.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-5" data-note="4" style="top: 34%; left: 62%;">
+            <img src="quieto.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-6" data-note="5" style="top: 48%; left: 28%;">
+            <img src="pochaco con corazon.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-7" data-note="6" style="top: 62%; left: 3%;">
+            <img src="pochaco de pie.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-8" data-note="7" style="top: 60%; left: 58%;">
+            <img src="acostado.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-9" data-note="8" style="top: 76%; left: 24%;">
+            <img src="pochaco musica.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+          <div class="bouncer afk-10" data-note="9" style="top: 78%; left: 60%;">
+            <img src="pochaco con gorrito.png" alt="" class="bouncer-img">
+            <span class="bouncer-label">Toca uwu</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- A3 - Dedication -->
+      <div class="dedication-cell">
         <div class="dedication-box">
+          <img src="hada.png" alt="" class="sticker sticker-tr">
           <h2 class="dedication-title">Hola miamor</h2>
           <p class="dedication-text">
             te amo, sinceramente llevo muy poco tiempo conociéndote pero me siento tan feliz, 
@@ -765,14 +821,37 @@
           </div>
         </div>
       </div>
+
     </div>
 
-    <!-- Working on this page -->
-    <div class="working-section">
-      <h2 class="working-title">Me Haciendo Esta Página ‹3</h2>
-      <div class="working-box">
-        <img src="trabajando.gif" alt="Working" class="working-gif">
-        <p class="working-caption">Full focus, full cariño, solo para ti uwu</p>
+    <!-- C row: C1 decoratives + C2 meme -->
+    <div class="grid-c">
+      <!-- C1 - Decoratives -->
+      <div class="col-a deco-cell">
+        <div class="deco-strip">
+          <div class="deco-item">
+            <img src="pochaco con corazon.png" alt="" class="deco-img">
+            <p class="deco-text">Te quiero tanto uwu</p>
+          </div>
+          <div class="deco-item">
+            <img src="hada.png" alt="" class="deco-img">
+            <p class="deco-text">Mi pequeña hada</p>
+          </div>
+          <div class="deco-item">
+            <img src="pochaco de pie.png" alt="" class="deco-img">
+            <p class="deco-text">Siempre tuyo</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- C2 - Meme -->
+      <div class="col-b">
+        <div class="working-box">
+          <img src="pochaco de pie.png" alt="" class="sticker sticker-bl">
+          <h2 class="working-title">Me Haciendo Esta Página ‹3</h2>
+          <img src="trabajando.gif" alt="Working" class="working-gif working-small">
+          <p class="working-caption">Full focus, full cariño, solo para ti uwu</p>
+        </div>
       </div>
     </div>
 
@@ -783,21 +862,20 @@
     </footer>
   </div>
 
+  <!-- Note reveal mini-window -->
+  <div class="notes-overlay" id="notesOverlay">
+    <div class="note-pop">
+      <button class="note-pop-close" id="notesClose">&times;</button>
+      <button class="note-pop-translate" id="notesTranslate">ES</button>
+      <h3 class="note-pop-title" id="notesPopTitle">uwu</h3>
+      <p class="note-pop-text" id="notesPopText"></p>
+    </div>
+  </div>
+
   <!-- Flower (fixed bottom-right) -->
   <img src="flor.png" alt="flower" class="flower-float" onclick="throwPetals()">
 
   <script>
-    function toggleFolder(folderId) {
-      const folder = document.getElementById(folderId);
-      const wasActive = folder.classList.contains('active');
-
-      document.querySelectorAll('.folder').forEach(f => f.classList.remove('active', 'maximized'));
-
-      if (!wasActive) {
-        folder.classList.add('active', 'maximized');
-      }
-    }
-
     function throwPetals() {
       const messages = ['te amo', 'te quiero mucho', 'amorteamo', 'uwu', 'mi calabacita', 'eres mi todo', 'tequieromucho'];
       const msg = messages[Math.floor(Math.random() * messages.length)];
@@ -808,6 +886,73 @@
       document.body.appendChild(span);
       setTimeout(() => span.remove(), 2500);
     }
+
+    (function notesSystem() {
+      const notes = [
+        { en: 'I love your taste, how nerdy you can be just to get every single one of my references.',
+          es: 'Me encanta tu gusto, y lo nerd que te vuelves solo por captar cada una de mis referencias.' },
+        { en: 'How sweet and kind you are with the way you treat me.',
+          es: 'Lo dulce y amable que eres con la forma en que me tratas.' },
+        { en: 'The beautiful things you always say to me.',
+          es: 'Las cosas hermosas que siempre me dices.' },
+        { en: 'Your love for Genshin, anime, music, movies and food.',
+          es: 'Tu amor por Genshin, el anime, la música, las pelis y la comida.' },
+        { en: 'The way you think and how you see things.',
+          es: 'La forma en que piensas y cómo ves las cosas.' },
+        { en: 'I love the way you take things as a joke, always laughing it off.',
+          es: 'Me encanta cómo te tomas las cosas como broma, siempre riéndote de todo.' },
+        { en: 'I love how you talk about the things you are into.',
+          es: 'Me encanta cómo hablas de las cosas que te apasionan.' },
+        { en: 'The way you farm your aura, and how you are a pro at MM2.',
+          es: 'La forma en que farmeas tu aura, y cómo eres un pro en MM2.' },
+        { en: 'That I can be completely myself when I am with you.',
+          es: 'Que puedo ser completamente yo cuando estoy contigo.' },
+        { en: 'The way we celebrate things, even the little ones.',
+          es: 'La forma en que celebramos las cosas, incluso las más pequeñas.' }
+      ];
+      const overlay = document.getElementById('notesOverlay');
+      const popTitle = document.getElementById('notesPopTitle');
+      const popText = document.getElementById('notesPopText');
+      const closeBtn = document.getElementById('notesClose');
+      const transBtn = document.getElementById('notesTranslate');
+      let activeBouncer = null;
+      let currentIndex = 0;
+      let showingEs = false;
+
+      document.querySelectorAll('.bouncer').forEach((bouncer) => {
+        bouncer.addEventListener('click', () => {
+          const idx = parseInt(bouncer.getAttribute('data-note'), 10);
+          if (bouncer.classList.contains('gone')) return;
+          activeBouncer = bouncer;
+          bouncer.classList.add('gone');
+          currentIndex = idx;
+          showingEs = false;
+          popTitle.textContent = 'te amo calabacita uwu';
+          popText.textContent = notes[idx].en;
+          transBtn.textContent = 'ES';
+          overlay.classList.add('show');
+        });
+      });
+
+      transBtn.addEventListener('click', () => {
+        showingEs = !showingEs;
+        popText.textContent = showingEs ? notes[currentIndex].es : notes[currentIndex].en;
+        transBtn.textContent = showingEs ? 'EN' : 'ES';
+      });
+
+      function closeNote() {
+        overlay.classList.remove('show');
+        if (activeBouncer) {
+          activeBouncer.classList.remove('gone');
+          activeBouncer = null;
+        }
+      }
+
+      closeBtn.addEventListener('click', closeNote);
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeNote();
+      });
+    })();
   </script>
 </body>
 </html>

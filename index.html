@@ -667,13 +667,26 @@
     }
 
     /* Responsive */
+    /* ===== Responsive: tablet & mobile ===== */
     @media (max-width: 800px) {
+      .container {
+        padding: 12px;
+      }
+
       .grid-ab {
         grid-template-columns: 1fr;
+        grid-template-areas:
+          "welcome"
+          "songs"
+          "notes"
+          "dedi";
+        gap: 16px;
+        margin-bottom: 20px;
       }
 
       .grid-c {
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .col-a, .col-b {
@@ -683,6 +696,140 @@
 
       .welcome {
         grid-column: 1;
+        padding: 28px 18px;
+      }
+
+      .intro-gif {
+        width: 120px;
+        height: 120px;
+      }
+
+      .welcome-text {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+      }
+
+      .notes-area {
+        padding: 20px 14px 24px;
+        min-height: 480px;
+      }
+
+      .notes-bouncer {
+        min-height: 400px;
+      }
+
+      .bouncer {
+        width: 100px;
+      }
+
+      .bouncer-img {
+        width: 76px;
+        height: 76px;
+      }
+
+      /* Reduce floating decorations so they don't clutter the small screen */
+      .floating-purin {
+        font-size: 1.4rem;
+      }
+
+      .floating-pochaco {
+        width: 60px;
+      }
+
+      /* Bigger corner stickers feel calmer when small */
+      .sticker {
+        width: 82px;
+        height: 82px;
+      }
+
+      .deco-box-padding, .deco-strip {
+        padding: 18px;
+        gap: 18px;
+      }
+
+      .deco-item {
+        flex: 1 1 160px;
+        max-width: 200px;
+      }
+
+      .deco-img {
+        width: 90px;
+        height: 90px;
+      }
+
+      .working-box {
+        padding: 20px;
+      }
+
+      .working-small {
+        width: 150px;
+      }
+
+      .working-title {
+        font-size: 2rem;
+      }
+    }
+
+    /* Smaller phones */
+    @media (max-width: 480px) {
+      .notes-area {
+        min-height: 420px;
+        padding: 16px 10px 20px;
+      }
+
+      .notes-bouncer {
+        min-height: 340px;
+      }
+
+      .bouncer {
+        width: 84px;
+      }
+
+      .bouncer-img {
+        width: 66px;
+        height: 66px;
+      }
+
+      .bouncer-label {
+        font-size: 1rem;
+      }
+
+      .notes-area-header {
+        font-size: 1.6rem;
+      }
+
+      .floating-purin {
+        font-size: 1.1rem;
+      }
+
+      .floating-pochaco {
+        width: 48px;
+      }
+
+      .sticker {
+        width: 70px;
+        height: 70px;
+      }
+
+      .note-pop {
+        padding: 24px 22px;
+      }
+
+      .note-pop-close {
+        right: 10px;
+      }
+
+      .note-pop-translate {
+        right: 46px;
+        padding: 3px 10px;
+        font-size: 0.8rem;
+      }
+
+      .deco-box, .deco-strip {
+        padding: 14px;
       }
     }
   </style>
